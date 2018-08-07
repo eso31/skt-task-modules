@@ -1,0 +1,21 @@
+server:
+  port: 0
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost/skytask
+    username: postgres
+    password: postgres
+  jpa:
+    generate-ddl: true
+
+  rabbitmq:
+    host: localhost
+    port: 3131
+    username: guest
+    password: guest
+
+  cloud:
+    stream:
+      default:
+        contentType: application/json
+
