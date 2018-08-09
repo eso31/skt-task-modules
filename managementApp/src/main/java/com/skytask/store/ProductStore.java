@@ -1,12 +1,13 @@
-package com.skytask.service;
+package com.skytask.store;
 
 import com.skytask.common.Product;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
-class ProductServiceImpl implements ProductService {
+@Component
+public class ProductStore  {
 
     private List<Product> products;
 

@@ -8,4 +8,5 @@ public interface ProductService {
     List<Product> getProducts();
 
     void create(Product product);
+
 }

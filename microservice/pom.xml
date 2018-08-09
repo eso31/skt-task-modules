@@ -15,7 +15,7 @@
         <dependency>
             <groupId>appSky</groupId>
             <artifactId>library</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>${appsky.version}</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
@@ -26,7 +26,6 @@
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
-            <scope>runtime</scope>
         </dependency>
     </dependencies>
 

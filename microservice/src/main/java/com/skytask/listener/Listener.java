@@ -30,7 +30,7 @@ public class Listener {
         LOGGER.info("I received: {}", product);
         productService.create(product);
         List<Product> products = productService.getProducts();
-        return new ProductMapper().productList2Json(products);
+        return ProductMapper.productList2Json(products);
     }
 
     @StreamListener(Channels.REQUEST_PRODUCT_LIST)
@@ -38,6 +38,6 @@ public class Listener {
     public String getProductList(String message) throws JsonProcessingException {
         LOGGER.info("I received {}", message);
         List<Product> products = productService.getProducts();
-        return new ProductMapper().productList2Json(products);
+        return ProductMapper.productList2Json(products);
     }
 }
