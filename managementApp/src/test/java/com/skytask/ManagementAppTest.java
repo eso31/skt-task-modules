@@ -1,7 +1,6 @@
 package com.skytask;
 
 import com.skytask.common.Product;
-import com.skytask.controller.ProductController;
 import com.skytask.listener.Listener;
 import com.skytask.store.ProductStore;
 import org.junit.Test;
@@ -14,16 +13,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class ManagementAppTest {
-
-    @Autowired
-    private ProductController productController;
 
     @Autowired
     private ProductStore productStore;

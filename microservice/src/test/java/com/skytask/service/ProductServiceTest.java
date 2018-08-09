@@ -23,7 +23,7 @@ public class ProductServiceTest {
 
     @Before
     public void setUp() {
-        productRepository= EasyMock.createMock(ProductRepository.class);
+        productRepository = EasyMock.createMock(ProductRepository.class);
         service = new ProductServiceImpl(productRepository);
     }
 
@@ -44,7 +44,7 @@ public class ProductServiceTest {
     }
 
     @Test
-    public void testGetProducts(){
+    public void testGetProducts() {
         EasyMock.expect(productRepository.getProducts()).andReturn(Collections.emptyList());
         EasyMock.replay(productRepository);
         List<Product> products = service.getProducts();

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Component
-public class ProductStore  {
+public class ProductStore {
 
     private List<Product> products;
 

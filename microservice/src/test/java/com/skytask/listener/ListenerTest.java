@@ -62,7 +62,4 @@ public class ListenerTest {
 
         EasyMock.verify(productService);
     }
-
-    // expectLastCall y despues de eso un andXXX para poder cambiar el id del producto
-
 }
