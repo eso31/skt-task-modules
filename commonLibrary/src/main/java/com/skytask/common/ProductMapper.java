@@ -11,13 +11,13 @@ public class ProductMapper {
 
     private final static ObjectMapper mapper = new ObjectMapper();
 
-    public static List<Product> json2ProductList(String json) throws IOException {
-        CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class, Product.class);
-        List<Product> productList = mapper.readValue(json, type);
-        return productList;
+    public static <K> List<K> json2List(String json, Class<K> myType) throws IOException {
+        CollectionType type = mapper.getTypeFactory().constructCollectionType(List.class, myType);
+        List<String> productList = mapper.readValue(json, type);
+        return  (List<K>) productList;
     }
 
-    public static String productList2Json(List<Product> products) throws JsonProcessingException {
-        return mapper.writeValueAsString(products);
+    public static <K> String list2Json(List<K> list) throws IOException {
+        return mapper.writeValueAsString(list);
     }
 }

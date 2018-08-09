@@ -29,7 +29,6 @@
         <appsky.version>1.0-SNAPSHOT</appsky.version>
     </properties>
 
-
     <dependencies>
         <dependency>
             <groupId>junit</groupId>

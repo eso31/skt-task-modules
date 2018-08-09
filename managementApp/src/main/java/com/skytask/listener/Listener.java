@@ -26,7 +26,7 @@ public class Listener {
     @StreamListener(Channels.RESPONSE_PRODUCT_LIST)
     public void updateProductList(String products) throws IOException {
         LOGGER.info("I received: {}", products);
-        List<Product> productList = ProductMapper.json2ProductList(products);
+        List<Product> productList = ProductMapper.json2List(products, Product.class);
         LOGGER.info(String.valueOf(productList.size()));
         productList.forEach(product -> LOGGER.info(product.toString()));
         productStore.setProducts(productList);

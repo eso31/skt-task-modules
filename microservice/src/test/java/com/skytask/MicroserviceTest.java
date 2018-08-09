@@ -12,6 +12,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.transaction.Transactional;
 
+import java.io.IOException;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
@@ -27,7 +29,7 @@ public class MicroserviceTest {
     private Listener listener;
 
     @Test
-    public void testListener() throws JsonProcessingException {
+    public void testListener() throws IOException {
         int previousSize = productService.getProducts().size();
 
         Product product = new Product();

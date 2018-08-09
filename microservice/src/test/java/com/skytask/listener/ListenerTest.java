@@ -9,6 +9,7 @@ import org.junit.Test;
 import org.junit.internal.runners.JUnit4ClassRunner;
 import org.junit.runner.RunWith;
 
+import java.io.IOException;
 import java.util.Arrays;
 
 import static org.junit.Assert.*;
@@ -34,7 +35,7 @@ public class ListenerTest {
     }
 
     @Test
-    public void testCreateProduct() throws JsonProcessingException {
+    public void testCreateProduct() throws IOException {
 
         String expected = "[{\"id\":null,\"name\":\"testName\",\"description\":\"testDescription\",\"price\":25.5,\"stock\":10}]";
 
@@ -50,7 +51,7 @@ public class ListenerTest {
     }
 
     @Test
-    public void testGetProductList() throws JsonProcessingException {
+    public void testGetProductList() throws IOException {
 
         String expected = "[{\"id\":null,\"name\":\"testName\",\"description\":\"testDescription\",\"price\":25.5,\"stock\":10}]";
 
