@@ -1,32 +1,30 @@
 package com.skytask.controller;
 
-import com.skytask.channel.ProductSource;
 import com.skytask.common.Product;
-import com.skytask.service.ProductService;
-import org.springframework.cloud.sleuth.Tracer;
-import org.springframework.integration.support.MessageBuilder;
+import com.skytask.service.RabbitmqService;
+import com.skytask.store.ProductStore;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.concurrent.ExecutionException;
+
 @Controller
 class ProductController {
 
-    private ProductService productService;
-    private ProductSource productSource;
-    private Tracer tracer;
+    private ProductStore productStore;
+    private RabbitmqService rabbitmqService;
 
-    public ProductController(ProductService productService, ProductSource productSource, Tracer tracer) {
-        this.productService = productService;
-        this.productSource = productSource;
-        this.tracer = tracer;
+    public ProductController(ProductStore productStore, RabbitmqService rabbitmqService) {
+        this.productStore = productStore;
+        this.rabbitmqService = rabbitmqService;
     }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public ModelAndView list() {
-        productSource.getProductList().send(MessageBuilder.withPayload("getProductsList").setCorrelationId(tracer.getCurrentSpan().getTraceId()).build());
-        return new ModelAndView("index", "products", productService.getProducts());
+    public ModelAndView list() throws ExecutionException, InterruptedException {
+        rabbitmqService.getProductListRabbit();
+        return new ModelAndView("index", "products", productStore.getProducts().get());
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.GET)
@@ -35,8 +33,8 @@ class ProductController {
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public ModelAndView create(Product product) {
-        productSource.createProduct().send(MessageBuilder.withPayload(product).setCorrelationId(tracer.getCurrentSpan().getTraceId()).build());
-        return new ModelAndView("redirect:/");
+    public ModelAndView create(Product product) throws ExecutionException, InterruptedException {
+        rabbitmqService.createProductRabbit(product);
+        return new ModelAndView("index", "products", productStore.getProducts().get());
     }
 }

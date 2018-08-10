@@ -24,4 +24,5 @@ class ProductServiceImpl implements ProductService {
     public List<Product> getProducts() {
         return productRepository.getProducts();
     }
+
 }

@@ -12,6 +12,7 @@ import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.annotation.StreamListener;
 import org.springframework.messaging.handler.annotation.SendTo;
 
+import java.io.IOException;
 import java.util.List;
 
 @EnableBinding(ProductSource.class)
@@ -26,18 +27,18 @@ public class Listener {
 
     @StreamListener(Channels.CREATE_PRODUCT)
     @SendTo(Channels.RESPONSE_PRODUCT_LIST)
-    public String createProduct(Product product) throws JsonProcessingException {
+    public String createProduct(Product product) throws IOException {
         LOGGER.info("I received: {}", product);
         productService.create(product);
         List<Product> products = productService.getProducts();
-        return new ProductMapper().productList2Json(products);
+        return ProductMapper.list2Json(products);
     }
 
     @StreamListener(Channels.REQUEST_PRODUCT_LIST)
     @SendTo(Channels.RESPONSE_PRODUCT_LIST)
-    public String getProductList(String message) throws JsonProcessingException {
+    public String getProductList(String message) throws IOException {
         LOGGER.info("I received {}", message);
         List<Product> products = productService.getProducts();
-        return new ProductMapper().productList2Json(products);
+        return ProductMapper.list2Json(products);
     }
 }

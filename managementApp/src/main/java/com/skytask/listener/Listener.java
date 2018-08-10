@@ -1,11 +1,10 @@
 package com.skytask.listener;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.type.CollectionType;
 import com.skytask.channel.ProductSource;
+import com.skytask.common.Channels;
 import com.skytask.common.Product;
 import com.skytask.common.ProductMapper;
-import com.skytask.service.ProductService;
+import com.skytask.store.ProductStore;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cloud.stream.annotation.EnableBinding;
@@ -18,18 +17,18 @@ import java.util.List;
 public class Listener {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(Listener.class);
-    private ProductService productService;
+    private ProductStore productStore;
 
-    public Listener(ProductService productService) {
-        this.productService = productService;
+    public Listener(ProductStore productStore) {
+        this.productStore = productStore;
     }
 
-    @StreamListener("responseProductListChannel")
-    public void updateProductList(String products) throws IOException {
+    @StreamListener(Channels.RESPONSE_PRODUCT_LIST)
+    public void updateProductList(String products) throws IOException, InterruptedException {
         LOGGER.info("I received: {}", products);
-        List<Product> productList = new ProductMapper().json2ProductList(products);
+        List<Product> productList = ProductMapper.json2List(products, Product.class);
         LOGGER.info(String.valueOf(productList.size()));
         productList.forEach(product -> LOGGER.info(product.toString()));
-        productService.setProducts(productList);
+        productStore.setProducts(productList);
     }
 }
