@@ -2,7 +2,6 @@ package com.skytask.store;
 
 import com.skytask.common.Product;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -16,7 +15,7 @@ public class ProductStore {
     private boolean flag = false;
     private ExecutorService executor = Executors.newSingleThreadExecutor();
 
-    public Future<List<Product>> getProducts() {
+    public synchronized Future<List<Product>> getProducts() {
         return executor.submit(() -> {
             while (!flag) {
                 Thread.sleep(1);
@@ -26,7 +25,7 @@ public class ProductStore {
         });
     }
 
-    public void setProducts(List<Product> products) throws InterruptedException {
+    public synchronized void setProducts(List<Product> products) throws InterruptedException {
         while (flag) {
             Thread.sleep(1);
         }

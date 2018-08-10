@@ -26,9 +26,12 @@ public class Listener {
     }
 
     @StreamListener(Channels.CREATE_PRODUCT)
-    public void createProduct(Product product) throws IOException {
+    @SendTo(Channels.RESPONSE_PRODUCT_LIST)
+    public String createProduct(Product product) throws IOException {
         LOGGER.info("I received: {}", product);
         productService.create(product);
+        List<Product> products = productService.getProducts();
+        return ProductMapper.list2Json(products);
     }
 
     @StreamListener(Channels.REQUEST_PRODUCT_LIST)

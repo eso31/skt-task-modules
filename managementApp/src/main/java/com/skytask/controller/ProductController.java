@@ -33,8 +33,8 @@ class ProductController {
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public ModelAndView create(Product product) {
+    public ModelAndView create(Product product) throws ExecutionException, InterruptedException {
         rabbitmqService.createProductRabbit(product);
-        return new ModelAndView("redirect:/");
+        return new ModelAndView("index", "products", productStore.getProducts().get());
     }
 }

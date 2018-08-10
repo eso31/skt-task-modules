@@ -36,11 +36,16 @@ public class ListenerTest {
 
     @Test
     public void testCreateProduct() throws IOException {
+
+        String expected = "[{\"id\":null,\"name\":\"testName\",\"description\":\"testDescription\",\"price\":25.5,\"stock\":10}]";
+
         productService.create(product);
         EasyMock.expectLastCall();
+        EasyMock.expect(productService.getProducts()).andReturn(Arrays.asList(product));
         EasyMock.replay(productService);
 
-        listener.createProduct(product);
+        String response = listener.createProduct(product);
+        assertEquals(expected, response);
 
         EasyMock.verify(productService);
     }
