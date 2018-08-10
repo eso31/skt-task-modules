@@ -25,7 +25,7 @@ public class ListenerTest {
     }
 
     @Test
-    public void testupdateProductListValid() throws IOException {
+    public void testupdateProductListValid() throws IOException, InterruptedException {
         productStore.setProducts(Collections.emptyList());
         EasyMock.expectLastCall();
         EasyMock.replay(productStore);
@@ -36,7 +36,7 @@ public class ListenerTest {
     }
 
     @Test(expected = JsonMappingException.class)
-    public void testupdateProductListInvalid() throws IOException {
+    public void testupdateProductListInvalid() throws IOException, InterruptedException {
         productStore.setProducts(Collections.emptyList());
         EasyMock.expectLastCall();
         EasyMock.replay(productStore);

@@ -19,12 +19,12 @@ public class Listener {
     private final static Logger LOGGER = LoggerFactory.getLogger(Listener.class);
     private ProductStore productStore;
 
-    public Listener(ProductStore productService) {
-        this.productStore = productService;
+    public Listener(ProductStore productStore) {
+        this.productStore = productStore;
     }
 
     @StreamListener(Channels.RESPONSE_PRODUCT_LIST)
-    public void updateProductList(String products) throws IOException {
+    public void updateProductList(String products) throws IOException, InterruptedException {
         LOGGER.info("I received: {}", products);
         List<Product> productList = ProductMapper.json2List(products, Product.class);
         LOGGER.info(String.valueOf(productList.size()));

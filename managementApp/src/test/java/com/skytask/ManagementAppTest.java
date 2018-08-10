@@ -12,6 +12,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import static org.junit.Assert.assertEquals;
 
@@ -26,7 +27,7 @@ public class ManagementAppTest {
     private Listener listener;
 
     @Test
-    public void testListener() throws IOException {
+    public void testListener() throws IOException, InterruptedException, ExecutionException {
         String products = "[{\"id\":13,\"name\":\"gansito\",\"description\":\"chocolate\",\"price\":20.0,\"stock\":50},{\"id\":14,\"name\":\"coca\",\"description\":\"refresco\",\"price\":15.0,\"stock\":60}]";
         List<Product> expectedList = new ArrayList<>();
         Product product1 = new Product();
@@ -48,7 +49,9 @@ public class ManagementAppTest {
 
         listener.updateProductList(products);
 
-        assertEquals(expectedList.size(), productStore.getProducts().size());
-        assertEquals(productStore.getProducts().toString(), expectedList.toString());
+        List<Product> productsList = productStore.getProducts().get();
+
+        assertEquals(expectedList.size(), productsList.size());
+        assertEquals(productsList.toString(), expectedList.toString());
     }
 }

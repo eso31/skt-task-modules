@@ -39,9 +39,8 @@ public class MicroserviceTest {
         product.setPrice(25.5);
 
         String responseList = listener.getProductList("getProductList");
-        String responseCreate = listener.createProduct(product);
+        listener.createProduct(product);
 
-        assertNotEquals(responseCreate, responseList);
         assertEquals(previousSize + 1, productService.getProducts().size());
     }
 }
