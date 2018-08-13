@@ -12,24 +12,24 @@ import java.util.concurrent.Future;
 public class ProductStore {
 
     private List<Product> products;
-    private boolean flag = false;
+    private boolean isProductListAvailable = false;
     private ExecutorService executor = Executors.newSingleThreadExecutor();
 
     public synchronized Future<List<Product>> getProducts() {
         return executor.submit(() -> {
-            while (!flag) {
+            while (!isProductListAvailable) {
                 Thread.sleep(1);
             }
-            flag = false;
+            isProductListAvailable = false;
             return products;
         });
     }
 
     public synchronized void setProducts(List<Product> products) throws InterruptedException {
-        while (flag) {
+        while (isProductListAvailable) {
             Thread.sleep(1);
         }
         this.products = products;
-        flag = true;
+        isProductListAvailable = true;
     }
 }

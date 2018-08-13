@@ -5,7 +5,7 @@
   </head>
     <h4>List of products</h4> <a href="/create">Create Product</a>
 
-    <table class="stripped l6">
+    <table>
       <th>Name</th>
       <th>Description</th>
       <th>Price</th>
