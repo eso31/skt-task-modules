@@ -7,7 +7,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.Payload;
 
 import java.io.IOException;
@@ -25,7 +24,7 @@ public class Listener {
 
     @RabbitHandler
     @RabbitListener(queues = "requestProductListQ")
-    public String requestQueue(@Payload String request) throws IOException {
+    public String getProductList(@Payload String request) throws IOException {
         LOGGER.info("I received {}", request);
         List<Product> products = productService.getProducts();
         return ProductMapper.list2Json(products);

@@ -41,11 +41,9 @@ public class ListenerTest {
 
         productService.create(product);
         EasyMock.expectLastCall();
-        EasyMock.expect(productService.getProducts()).andReturn(Arrays.asList(product));
         EasyMock.replay(productService);
 
-        String response = listener.createProduct(product);
-        assertEquals(expected, response);
+        listener.createProduct(product);
 
         EasyMock.verify(productService);
     }

@@ -1,6 +1,7 @@
 package com.skytask;
 
 import com.skytask.common.Product;
+import com.skytask.listener.Listener;
 import com.skytask.service.ProductService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
