@@ -29,22 +29,22 @@ public class Config {
     @Value("${rabbitmq.config.queue.responseProductList:responseProductListQ}")
     private String responseProductList;
 
-    @Value("${rabbitmq.config.queue.requestProductList}")
+    @Value("${rabbitmq.config.queue.requestProductList:requestProductListQ}")
     private String requestProductList;
 
-    @Value("${rabbitmq.config.queue.createProduct}")
+    @Value("${rabbitmq.config.queue.createProduct:createProductQ}")
     private String createProduct;
 
-    @Value("${rabbitmq.config.exchange}")
+    @Value("${rabbitmq.config.exchange:productExchange}")
     private String exchange;
 
-    @Value("${rabbitmq.config.routingKey.responseProductList}")
+    @Value("${rabbitmq.config.routingKey.responseProductList:responseProductListKey}")
     private String responseProductListKey;
 
-    @Value("${rabbitmq.config.routingKey.requestProductList}")
+    @Value("${rabbitmq.config.routingKey.requestProductList:requestProductListKey}")
     private String requestProductListKey;
 
-    @Value("${rabbitmq.config.routingKey.createProduct}")
+    @Value("${rabbitmq.config.routingKey.createProduct:createProductKey}")
     private String createProductKey;
 
     @Bean
