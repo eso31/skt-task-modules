@@ -36,7 +36,7 @@ public class ProductServiceManagement {
     public void createProductRabbit(Product product) {
         rabbitTemplate.convertSendAndReceive(
                 directExchange.getName(),
-                "responseProductListKey",
+                "createProductKey",
                 product);
     }
 }
