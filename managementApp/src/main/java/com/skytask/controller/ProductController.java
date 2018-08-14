@@ -1,30 +1,32 @@
 package com.skytask.controller;
 
 import com.skytask.common.Product;
-import com.skytask.service.RabbitmqService;
+import com.skytask.service.ProductServiceManagement;
 import com.skytask.store.ProductStore;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.io.IOException;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 @Controller
 class ProductController {
 
     private ProductStore productStore;
-    private RabbitmqService rabbitmqService;
+    private ProductServiceManagement productServiceManagement;
 
-    public ProductController(ProductStore productStore, RabbitmqService rabbitmqService) {
+    public ProductController(ProductStore productStore, ProductServiceManagement productServiceManagement) {
         this.productStore = productStore;
-        this.rabbitmqService = rabbitmqService;
+        this.productServiceManagement = productServiceManagement;
     }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public ModelAndView list() throws ExecutionException, InterruptedException {
-        rabbitmqService.getProductListRabbit();
-        return new ModelAndView("index", "products", productStore.getProducts().get());
+    public ModelAndView list() throws IOException {
+        List<Product> productList = productServiceManagement.getProductListRabbit();
+        return new ModelAndView("index", "products", productList);
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.GET)
@@ -33,8 +35,8 @@ class ProductController {
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public ModelAndView create(Product product) throws ExecutionException, InterruptedException {
-        rabbitmqService.createProductRabbit(product);
-        return new ModelAndView("index", "products", productStore.getProducts().get());
+    public String create(Product product) {
+        productServiceManagement.createProductRabbit(product);
+        return "redirect:/";
     }
 }

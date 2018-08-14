@@ -1,0 +1,13 @@
+rabbitmq:
+  config:
+    queue:
+      responseProductList: responseProductListQ
+      requestProductList: requestProductListQ
+      createProduct: createProductQ
+
+    exchange: productExchange
+
+    routingKey:
+      responseProductList: responseProductListKey
+      requestProductList: requestProductListKey
+      createProduct: createProductKey

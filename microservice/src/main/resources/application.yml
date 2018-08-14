@@ -18,4 +18,3 @@ spring:
     stream:
       default:
         contentType: application/json
-

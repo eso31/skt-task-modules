@@ -18,6 +18,7 @@ public class ProductStore {
     public synchronized Future<List<Product>> getProducts() {
         return executor.submit(() -> {
             while (!isProductListAvailable) {
+                System.out.println(this);
                 Thread.sleep(1);
             }
             isProductListAvailable = false;
@@ -27,6 +28,7 @@ public class ProductStore {
 
     public synchronized void setProducts(List<Product> products) throws InterruptedException {
         while (isProductListAvailable) {
+            System.out.println(this);
             Thread.sleep(1);
         }
         this.products = products;
