@@ -1,26 +1,21 @@
 package com.skytask.service;
 
-import com.skytask.channel.ProductSource;
 import com.skytask.common.Product;
 import com.skytask.common.ProductMapper;
 import org.springframework.amqp.core.DirectExchange;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import org.springframework.integration.support.MessageBuilder;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 @Component
 public class ProductServiceManagement {
 
-    private ProductSource productSource;
     private RabbitTemplate rabbitTemplate;
     private DirectExchange directExchange;
 
-    public ProductServiceManagement(ProductSource productSource, RabbitTemplate rabbitTemplate, DirectExchange directExchange) {
-        this.productSource = productSource;
+    public ProductServiceManagement(RabbitTemplate rabbitTemplate, DirectExchange directExchange) {
         this.rabbitTemplate = rabbitTemplate;
         this.directExchange = directExchange;
     }

@@ -2,7 +2,6 @@ package com.skytask.controller;
 
 import com.skytask.common.Product;
 import com.skytask.service.ProductServiceManagement;
-import com.skytask.store.ProductStore;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -10,16 +9,13 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 @Controller
 class ProductController {
 
-    private ProductStore productStore;
     private ProductServiceManagement productServiceManagement;
 
-    public ProductController(ProductStore productStore, ProductServiceManagement productServiceManagement) {
-        this.productStore = productStore;
+    public ProductController(ProductServiceManagement productServiceManagement) {
         this.productServiceManagement = productServiceManagement;
     }
 

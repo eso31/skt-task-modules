@@ -1,6 +1,6 @@
 package com.skytask;
 
-import com.skytask.listener.ListenerRabbit;
+import com.skytask.listener.Listener;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -12,7 +12,7 @@ public class MicroserviceApp {
     }
 
     @Bean
-    public ListenerRabbit subscriber(){
-        return new ListenerRabbit();
+    public Listener subscriber(){
+        return new Listener();
     }
 }
