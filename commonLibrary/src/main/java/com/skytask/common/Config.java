@@ -12,8 +12,11 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.amqp.support.converter.MessageConverter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.amqp.SimpleRabbitListenerContainerFactoryConfigurer;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -26,26 +29,8 @@ import java.util.concurrent.Executors;
 @Configuration
 public class Config {
 
-    @Value("${rabbitmq.config.queue.responseProductList:responseProductListQ}")
-    private String responseProductList;
-
-    @Value("${rabbitmq.config.queue.requestProductList:requestProductListQ}")
-    private String requestProductList;
-
-    @Value("${rabbitmq.config.queue.createProduct:createProductQ}")
-    private String createProduct;
-
-    @Value("${rabbitmq.config.exchange:productExchange}")
-    private String exchange;
-
-    @Value("${rabbitmq.config.routingKey.responseProductList:responseProductListKey}")
-    private String responseProductListKey;
-
-    @Value("${rabbitmq.config.routingKey.requestProductList:requestProductListKey}")
-    private String requestProductListKey;
-
-    @Value("${rabbitmq.config.routingKey.createProduct:createProductKey}")
-    private String createProductKey;
+    @Autowired
+    private RabbitMQVariables rabbitMQVariables;
 
     @Bean
     public Executor taskExecutor() {
@@ -77,17 +62,17 @@ public class Config {
 
     @Bean
     public Queue responseProductListQueue() {
-        return new Queue(responseProductList);
+        return new Queue(rabbitMQVariables.getQueue().getResponseProductList());
     }
 
     @Bean
     public Queue requestProductListQueue() {
-        return new Queue(requestProductList);
+        return new Queue(rabbitMQVariables.getQueue().getRequestProductList());
     }
 
     @Bean
     public Queue createProductQueue() {
-        return new Queue(createProduct);
+        return new Queue(rabbitMQVariables.getQueue().getCreateProduct());
     }
 
     @Bean
@@ -103,22 +88,22 @@ public class Config {
 
         AsyncRabbitTemplate asyncRabbitTemplate = new AsyncRabbitTemplate(
                 rabbitTemplate(connectionFactory),
-                rpcReplyMessageListenerContainer(connectionFactory), exchange + "/" + responseProductListKey);
+                rpcReplyMessageListenerContainer(connectionFactory), rabbitMQVariables.getExchange() + "/" + rabbitMQVariables.getRoutingKey().getRequestProductList());
 
         return asyncRabbitTemplate;
     }
 
     @Bean
     public DirectExchange directExchange() {
-        return new DirectExchange(exchange);
+        return new DirectExchange(rabbitMQVariables.getExchange());
     }
 
     @Bean
     public List<Binding> bindings() {
         return Arrays.asList(
-                BindingBuilder.bind(requestProductListQueue()).to(directExchange()).with(requestProductListKey),
-                BindingBuilder.bind(responseProductListQueue()).to(directExchange()).with(responseProductListKey),
-                BindingBuilder.bind(createProductQueue()).to(directExchange()).with(createProductKey)
+                BindingBuilder.bind(requestProductListQueue()).to(directExchange()).with(rabbitMQVariables.getRoutingKey().getRequestProductList()),
+                BindingBuilder.bind(responseProductListQueue()).to(directExchange()).with(rabbitMQVariables.getRoutingKey().getResponseProductList()),
+                BindingBuilder.bind(createProductQueue()).to(directExchange()).with(rabbitMQVariables.getRoutingKey().getCreateProduct())
         );
 
     }

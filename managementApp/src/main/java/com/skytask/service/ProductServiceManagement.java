@@ -28,8 +28,11 @@ public class ProductServiceManagement {
         return ProductMapper.json2List(productList, Product.class);
     }
 
-    public void createProductRabbit(Product product) {
-        rabbitTemplate.convertSendAndReceive(
+    public String createProductRabbit(Product product) throws IllegalArgumentException{
+        if(product==null)
+            throw new IllegalArgumentException();
+
+        return (String) rabbitTemplate.convertSendAndReceive(
                 directExchange.getName(),
                 "createProductKey",
                 product);

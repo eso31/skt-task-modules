@@ -32,9 +32,10 @@ public class Listener {
 
     @RabbitHandler
     @RabbitListener(queues = "createProductQ")
-    public void createProduct(@Payload Product product) {
+    public String createProduct(@Payload Product product) {
         LOGGER.info("I received {}", product);
         productService.create(product);
+        return "productCreated";
     }
 
 }

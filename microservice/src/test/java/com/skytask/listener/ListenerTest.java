@@ -35,9 +35,7 @@ public class ListenerTest {
     }
 
     @Test
-    public void testCreateProduct() throws IOException {
-
-        String expected = "[{\"id\":null,\"name\":\"testName\",\"description\":\"testDescription\",\"price\":25.5,\"stock\":10}]";
+    public void testCreateProductHappyPath() {
 
         productService.create(product);
         EasyMock.expectLastCall();
