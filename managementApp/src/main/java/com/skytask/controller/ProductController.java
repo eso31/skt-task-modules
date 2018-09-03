@@ -1,9 +1,7 @@
 package com.skytask.controller;
 
 import com.skytask.common.Product;
-import com.skytask.common.RabbitMQVariables;
 import com.skytask.service.ProductServiceManagement;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -34,7 +32,11 @@ class ProductController {
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public String create(Product product) {
-        productServiceManagement.createProductRabbit(product);
+        try {
+            productServiceManagement.createProductRabbit(product);
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+        }
         return "redirect:/";
     }
 }
