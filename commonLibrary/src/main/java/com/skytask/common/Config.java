@@ -33,29 +33,6 @@ public class Config {
     private RabbitMQVariables rabbitMQVariables;
 
     @Bean
-    public Executor taskExecutor() {
-        return Executors.newCachedThreadPool();
-    }
-
-    @Bean
-    public SimpleRabbitListenerContainerFactory simpleMessageListenerContainerFactory(ConnectionFactory connectionFactory,
-                                                                                      SimpleRabbitListenerContainerFactoryConfigurer configurer) {
-        SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
-        factory.setTaskExecutor(taskExecutor());
-        configurer.configure(factory, connectionFactory);
-        return factory;
-    }
-
-    @Bean
-    public RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory) {
-        RabbitTemplate template = new RabbitTemplate(connectionFactory);
-        template.setMessageConverter(jsonMessageConverter());
-        template.setReplyTimeout(15000);
-
-        return template;
-    }
-
-    @Bean
     public MessageConverter jsonMessageConverter() {
         return new Jackson2JsonMessageConverter();
     }
@@ -76,24 +53,6 @@ public class Config {
     }
 
     @Bean
-    public SimpleMessageListenerContainer rpcReplyMessageListenerContainer(ConnectionFactory connectionFactory) {
-        SimpleMessageListenerContainer simpleMessageListenerContainer = new SimpleMessageListenerContainer(connectionFactory);
-        simpleMessageListenerContainer.setQueues(responseProductListQueue());
-        simpleMessageListenerContainer.setTaskExecutor(taskExecutor());
-        return simpleMessageListenerContainer;
-    }
-
-    @Bean
-    public AsyncRabbitTemplate asyncRabbitTemplate(ConnectionFactory connectionFactory) {
-
-        AsyncRabbitTemplate asyncRabbitTemplate = new AsyncRabbitTemplate(
-                rabbitTemplate(connectionFactory),
-                rpcReplyMessageListenerContainer(connectionFactory), rabbitMQVariables.getExchange() + "/" + rabbitMQVariables.getRoutingKey().getRequestProductList());
-
-        return asyncRabbitTemplate;
-    }
-
-    @Bean
     public DirectExchange directExchange() {
         return new DirectExchange(rabbitMQVariables.getExchange());
     }
@@ -105,8 +64,5 @@ public class Config {
                 BindingBuilder.bind(responseProductListQueue()).to(directExchange()).with(rabbitMQVariables.getRoutingKey().getResponseProductList()),
                 BindingBuilder.bind(createProductQueue()).to(directExchange()).with(rabbitMQVariables.getRoutingKey().getCreateProduct())
         );
-
     }
-
-
 }
