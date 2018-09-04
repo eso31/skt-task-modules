@@ -6,25 +6,16 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ConfigurationProperties("rabbitmq.config")
 public class RabbitMQVariables {
-    public static class Queue {
-        private String responseProductList;
-        private String requestProductList;
+    public static class Queues {
+        private String productList;
         private String createProduct;
 
-        public String getResponseProductList() {
-            return responseProductList;
+        public String getProductList() {
+            return productList;
         }
 
-        public void setResponseProductList(String responseProductList) {
-            this.responseProductList = responseProductList;
-        }
-
-        public String getRequestProductList() {
-            return requestProductList;
-        }
-
-        public void setRequestProductList(String requestProductList) {
-            this.requestProductList = requestProductList;
+        public void setProductList(String productList) {
+            this.productList = productList;
         }
 
         public String getCreateProduct() {
@@ -36,25 +27,16 @@ public class RabbitMQVariables {
         }
     }
 
-    public static class RoutingKey{
-        private String responseProductList;
-        private String requestProductList;
+    public static class RoutingKeys {
+        private String productList;
         private String createProduct;
 
-        public String getResponseProductList() {
-            return responseProductList;
+        public String getProductList() {
+            return productList;
         }
 
-        public void setResponseProductList(String responseProductList) {
-            this.responseProductList = responseProductList;
-        }
-
-        public String getRequestProductList() {
-            return requestProductList;
-        }
-
-        public void setRequestProductList(String requestProductList) {
-            this.requestProductList = requestProductList;
+        public void setProductList(String productList) {
+            this.productList = productList;
         }
 
         public String getCreateProduct() {
@@ -67,18 +49,19 @@ public class RabbitMQVariables {
     }
 
 
-    private Queue queue;
+    private Queues queues;
     private String exchange;
-    private RoutingKey routingKey;
+    private RoutingKeys routingKeys;
 
 
-    public Queue getQueue() {
-        return queue;
+    public Queues getQueues() {
+        return queues;
     }
 
-    public void setQueue(Queue queue) {
-        this.queue = queue;
+    public void setQueues(Queues queues) {
+        this.queues = queues;
     }
+
     public String getExchange() {
         return exchange;
     }
@@ -87,11 +70,11 @@ public class RabbitMQVariables {
         this.exchange = exchange;
     }
 
-    public RoutingKey getRoutingKey() {
-        return routingKey;
+    public RoutingKeys getRoutingKeys() {
+        return routingKeys;
     }
 
-    public void setRoutingKey(RoutingKey routingKey) {
-        this.routingKey = routingKey;
+    public void setRoutingKeys(RoutingKeys routingKeys) {
+        this.routingKeys = routingKeys;
     }
 }
