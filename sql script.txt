@@ -9,10 +9,14 @@ create table product(
 CREATE FUNCTION insertProduct(name varchar, description varchar, price double precision, stock integer)
   RETURNS int AS
   $BODY$
+      DECLARE
+      p_id integer;
       BEGIN
         INSERT INTO product(name, description, price, stock)
-        VALUES(name, description, price, stock);
-        return 1;
+        VALUES(name, description, price, stock)
+        returning id into p_id;
+
+        return p_id;
       END;
   $BODY$
   LANGUAGE 'plpgsql';
@@ -28,6 +32,5 @@ CREATE OR REPLACE FUNCTION getProducts ()
 AS $$
 BEGIN
  RETURN QUERY SELECT p.name, p.description, p.price, p.stock, p.id FROM product p;
-END; $$ 
- 
+END; $$
 LANGUAGE 'plpgsql';
