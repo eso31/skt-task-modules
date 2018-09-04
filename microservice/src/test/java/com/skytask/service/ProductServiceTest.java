@@ -36,7 +36,7 @@ public class ProductServiceTest {
         product.setPrice(25.5);
 
         EasyMock.expect(productRepository.insertProduct(product.getName(), product.getDescription(), product.getPrice(),
-                product.getStock())).andReturn(1);
+                product.getStock())).andReturn(1L);
         EasyMock.replay(productRepository);
 
         service.create(product);

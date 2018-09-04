@@ -1,5 +1,5 @@
 create table product(
-  id serial primary key,
+  id bigserial primary key,
   name varchar,
   description varchar,
   price double precision,
@@ -7,10 +7,10 @@ create table product(
 );
 
 CREATE FUNCTION insertProduct(name varchar, description varchar, price double precision, stock integer)
-  RETURNS int AS
+  RETURNS bigint AS
   $BODY$
       DECLARE
-      p_id integer;
+      p_id bigint;
       BEGIN
         INSERT INTO product(name, description, price, stock)
         VALUES(name, description, price, stock)
@@ -27,7 +27,7 @@ CREATE OR REPLACE FUNCTION getProducts ()
  description varchar,
  price double precision,
  stock integer,
- id integer
+ id bigint
 )
 AS $$
 BEGIN

@@ -37,8 +37,7 @@ public class ListenerTest {
     @Test
     public void testCreateProductHappyPath() {
 
-        productService.create(product);
-        EasyMock.expectLastCall();
+        EasyMock.expect(productService.create(product)).andReturn(1L);
         EasyMock.replay(productService);
 
         listener.createProduct(product);
