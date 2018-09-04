@@ -5,7 +5,6 @@ spring:
     url: jdbc:postgresql://localhost/skytask
     username: postgres
     password: postgres
-  jpa:
     generate-ddl: true
 
   rabbitmq:
