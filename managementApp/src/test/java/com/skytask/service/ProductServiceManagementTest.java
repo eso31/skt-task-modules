@@ -78,12 +78,12 @@ public class ProductServiceManagementTest {
         product.setStock(25);
 
         EasyMock.expect(directExchange.getName()).andReturn("productExchange");
-        EasyMock.expect(rabbitTemplate.convertSendAndReceive("productExchange", "createProductKey", product)).andReturn("productCreated");
+        EasyMock.expect(rabbitTemplate.convertSendAndReceive("productExchange", "createProductKey", product)).andReturn(1L);
         EasyMock.replay(directExchange);
         EasyMock.replay(rabbitTemplate);
 
-        String answer = productServiceManagement.createProductRabbit(product);
-        assertEquals("productCreated", answer);
+        Long id = productServiceManagement.createProductRabbit(product);
+        assertEquals(new Long(1), id);
 
         EasyMock.verify(directExchange);
         EasyMock.verify(rabbitTemplate);
@@ -98,8 +98,7 @@ public class ProductServiceManagementTest {
         EasyMock.replay(directExchange);
         EasyMock.replay(rabbitTemplate);
 
-        String answer = productServiceManagement.createProductRabbit(product);
-        assertEquals("productCreated", answer);
+        productServiceManagement.createProductRabbit(product);
 
         EasyMock.verify(directExchange);
         EasyMock.verify(rabbitTemplate);

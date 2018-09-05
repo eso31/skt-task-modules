@@ -47,8 +47,7 @@ public class ProductServiceTest {
     public void testGetProducts() {
         EasyMock.expect(productRepository.getProducts()).andReturn(Collections.emptyList());
         EasyMock.replay(productRepository);
-        List<Product> products = service.getProducts();
-        assertTrue(products.isEmpty());
+        service.getProducts();
         EasyMock.verify(productRepository);
     }
 
