@@ -1,20 +1,19 @@
 package com.skytask.listener;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.skytask.common.Product;
 import com.skytask.service.ProductService;
 import org.easymock.EasyMock;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.internal.runners.JUnit4ClassRunner;
 import org.junit.runner.RunWith;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.IOException;
 import java.util.Arrays;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
-@RunWith(JUnit4ClassRunner.class)
+@RunWith(SpringRunner.class)
 public class ListenerTest {
 
     private ProductService productService;

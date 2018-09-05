@@ -5,10 +5,10 @@ import com.skytask.common.ProductMapper;
 import org.easymock.EasyMock;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.internal.runners.JUnit4ClassRunner;
 import org.junit.runner.RunWith;
 import org.springframework.amqp.core.DirectExchange;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -17,7 +17,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
-@RunWith(JUnit4ClassRunner.class)
+@RunWith(SpringRunner.class)
 public class ProductServiceManagementTest {
 
     private RabbitTemplate rabbitTemplate;
