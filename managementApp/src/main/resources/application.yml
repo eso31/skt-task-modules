@@ -13,8 +13,3 @@ spring:
     port: 3131
     username: guest
     password: guest
-
-  cloud:
-    stream:
-      default:
-        contentType: application/json

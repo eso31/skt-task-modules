@@ -16,12 +16,13 @@ class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void create(Product product) {
-        productRepository.insertProduct(product.getName(), product.getDescription(), product.getPrice(), product.getStock());
+    public Long create(Product product) {
+        return productRepository.insertProduct(product.getName(), product.getDescription(), product.getPrice(), product.getStock());
     }
 
     @Override
     public List<Product> getProducts() {
         return productRepository.getProducts();
     }
+
 }

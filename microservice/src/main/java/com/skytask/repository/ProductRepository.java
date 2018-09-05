@@ -12,7 +12,7 @@ import java.util.List;
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
     @Procedure
-    int insertProduct(String name, String description, Double price, Integer stock);
+    Long insertProduct(String name, String description, Double price, Integer stock);
 
     @Query(nativeQuery = true, value = "SELECT * from  getproducts()")
     List<Product> getProducts();

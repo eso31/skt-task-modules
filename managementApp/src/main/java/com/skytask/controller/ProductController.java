@@ -1,32 +1,28 @@
 package com.skytask.controller;
 
-import com.skytask.channel.ProductSource;
 import com.skytask.common.Product;
-import com.skytask.service.ProductService;
-import org.springframework.cloud.sleuth.Tracer;
-import org.springframework.integration.support.MessageBuilder;
+import com.skytask.service.ProductServiceManagement;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.io.IOException;
+import java.util.List;
+
 @Controller
 class ProductController {
 
-    private ProductService productService;
-    private ProductSource productSource;
-    private Tracer tracer;
+    private ProductServiceManagement productServiceManagement;
 
-    public ProductController(ProductService productService, ProductSource productSource, Tracer tracer) {
-        this.productService = productService;
-        this.productSource = productSource;
-        this.tracer = tracer;
+    public ProductController(ProductServiceManagement productServiceManagement) {
+        this.productServiceManagement = productServiceManagement;
     }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public ModelAndView list() {
-        productSource.getProductList().send(MessageBuilder.withPayload("getProductsList").setCorrelationId(tracer.getCurrentSpan().getTraceId()).build());
-        return new ModelAndView("index", "products", productService.getProducts());
+    public ModelAndView list() throws IOException {
+        List<Product> productList = productServiceManagement.getProductListRabbit();
+        return new ModelAndView("index", "products", productList);
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.GET)
@@ -35,8 +31,12 @@ class ProductController {
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public ModelAndView create(Product product) {
-        productSource.createProduct().send(MessageBuilder.withPayload(product).setCorrelationId(tracer.getCurrentSpan().getTraceId()).build());
-        return new ModelAndView("redirect:/");
+    public String create(Product product) {
+        try {
+            productServiceManagement.createProductRabbit(product);
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+        }
+        return "redirect:/";
     }
 }
