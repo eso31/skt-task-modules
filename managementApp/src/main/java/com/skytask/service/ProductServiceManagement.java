@@ -23,7 +23,7 @@ public class ProductServiceManagement {
     public List<Product> getProductListRabbit() throws IOException {
         String productList = (String) rabbitTemplate.convertSendAndReceive(
                 directExchange.getName(),
-                "requestProductListKey",
+                "productListKey",
                 "getProductList");
         return ProductMapper.json2List(productList, Product.class);
     }

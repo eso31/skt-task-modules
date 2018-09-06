@@ -34,7 +34,7 @@ public class ProductServiceManagementTest {
     @Test
     public void getProductListRabbitEmptyTest() throws IOException {
         EasyMock.expect(directExchange.getName()).andReturn("productExchange");
-        EasyMock.expect(rabbitTemplate.convertSendAndReceive("productExchange", "requestProductListKey", "getProductList")).andReturn("[]");
+        EasyMock.expect(rabbitTemplate.convertSendAndReceive("productExchange", "productListKey", "getProductList")).andReturn("[]");
         EasyMock.replay(directExchange);
         EasyMock.replay(rabbitTemplate);
 
@@ -57,7 +57,7 @@ public class ProductServiceManagementTest {
         List<Product> expectedList = Arrays.asList(product);
 
         EasyMock.expect(directExchange.getName()).andReturn("productExchange");
-        EasyMock.expect(rabbitTemplate.convertSendAndReceive("productExchange", "requestProductListKey", "getProductList")).andReturn(ProductMapper.list2Json(expectedList));
+        EasyMock.expect(rabbitTemplate.convertSendAndReceive("productExchange", "productListKey", "getProductList")).andReturn(ProductMapper.list2Json(expectedList));
         EasyMock.replay(directExchange);
         EasyMock.replay(rabbitTemplate);
 

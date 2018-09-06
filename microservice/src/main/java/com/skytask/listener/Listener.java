@@ -23,7 +23,7 @@ public class Listener {
     }
 
     @RabbitHandler
-    @RabbitListener(queues = "requestProductListQ")
+    @RabbitListener(queues = "productListQ")
     public String getProductList(@Payload String request) throws IOException {
         LOGGER.info("I received {}", request);
         List<Product> products = productService.getProducts();
