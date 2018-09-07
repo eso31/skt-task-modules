@@ -28,12 +28,12 @@ public class RabbitConfiguration {
 
     @Bean
     public Queue productListQueue() {
-        return new Queue(rabbitMQVariables.getQueues().getProductList());
+        return new Queue(rabbitMQVariables.getQueues().get("productList"));
     }
 
     @Bean
     public Queue createProductQueue() {
-        return new Queue(rabbitMQVariables.getQueues().getCreateProduct());
+        return new Queue(rabbitMQVariables.getQueues().get("createProduct"));
     }
 
     @Bean
@@ -44,8 +44,8 @@ public class RabbitConfiguration {
     @Bean
     public List<Binding> bindings() {
         return Arrays.asList(
-                BindingBuilder.bind(productListQueue()).to(directExchange()).with(rabbitMQVariables.getRoutingKeys().getProductList()),
-                BindingBuilder.bind(createProductQueue()).to(directExchange()).with(rabbitMQVariables.getRoutingKeys().getCreateProduct())
+                BindingBuilder.bind(productListQueue()).to(directExchange()).with(rabbitMQVariables.getRoutingKeys().get("productList")),
+                BindingBuilder.bind(createProductQueue()).to(directExchange()).with(rabbitMQVariables.getRoutingKeys().get("createProduct"))
         );
     }
 }
