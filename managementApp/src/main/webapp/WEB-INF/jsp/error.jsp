@@ -4,6 +4,7 @@
         <title>Errors</title>
     </head>
     <body>
+        <h1>Errors</h1>
         <div>
             <ul>
                 <c:forEach var="error" items="${errors}">
