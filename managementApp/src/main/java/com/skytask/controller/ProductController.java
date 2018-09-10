@@ -12,7 +12,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -37,8 +36,8 @@ class ProductController {
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.GET)
-    public String createform() {
-        return "create";
+    public ModelAndView createform() {
+        return new ModelAndView("create");
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
