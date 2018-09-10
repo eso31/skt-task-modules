@@ -1,14 +1,11 @@
 package com.skytask.common;
 
-import org.hibernate.validator.constraints.NotEmpty;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 @Entity
@@ -18,10 +15,10 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @NotNull
-    @Size(min=1, max = 30, message = "Product name should be between 1 and 30 characters")
+    @Size(min = 1, max = 30, message = "Product name should be between 1 and 30 characters")
     private String name;
     @NotNull
-    @Size(min=1, max = 30, message = "Product description should be between 1 and 30 characters")
+    @Size(min = 1, max = 30, message = "Product description should be between 1 and 30 characters")
     private String description;
     @NotNull
     @Min(value = 0, message = "Product price can not be negative")

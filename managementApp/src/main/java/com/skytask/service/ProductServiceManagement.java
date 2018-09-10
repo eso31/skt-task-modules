@@ -28,8 +28,8 @@ public class ProductServiceManagement {
         return ProductMapper.json2List(productList, Product.class);
     }
 
-    public Long createProductRabbit(Product product) throws IllegalArgumentException{
-        if(product==null)
+    public Long createProductRabbit(Product product) throws IllegalArgumentException {
+        if (product == null)
             throw new IllegalArgumentException();
 
         return (Long) rabbitTemplate.convertSendAndReceive(

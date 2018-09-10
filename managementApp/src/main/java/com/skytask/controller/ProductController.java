@@ -29,7 +29,7 @@ class ProductController {
         List<Product> productList;
         try {
             productList = productServiceManagement.getProductListRabbit();
-        } catch (AmqpException amqpException){
+        } catch (AmqpException amqpException) {
             return new ModelAndView("error", "errors", Collections.singletonList("Failed to connect with rabbitmq"));
         }
         return new ModelAndView("index", "products", productList);
@@ -42,7 +42,7 @@ class ProductController {
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public ModelAndView create(@Valid Product product, BindingResult bindingResult) {
-        if(bindingResult.hasErrors()) {
+        if (bindingResult.hasErrors()) {
             return new ModelAndView("error", "errors",
                     bindingResult.getAllErrors().stream().map(DefaultMessageSourceResolvable::getDefaultMessage).toArray());
         }
@@ -51,7 +51,7 @@ class ProductController {
             productServiceManagement.createProductRabbit(product);
         } catch (IllegalArgumentException e) {
             return new ModelAndView("error", "errors", Collections.singletonList("Product can not be null"));
-        } catch (AmqpException amqpException){
+        } catch (AmqpException amqpException) {
             return new ModelAndView("error", "errors", Collections.singletonList("Failed to connect with rabbitmq"));
         }
         return new ModelAndView("redirect:/");

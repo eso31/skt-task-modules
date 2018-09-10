@@ -10,6 +10,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Collections;
 
 import static org.junit.Assert.assertEquals;
 
@@ -49,7 +50,7 @@ public class ListenerTest {
 
         String expected = "[{\"id\":null,\"name\":\"testName\",\"description\":\"testDescription\",\"price\":25.5,\"stock\":10}]";
 
-        EasyMock.expect(productService.getProducts()).andReturn(Arrays.asList(product));
+        EasyMock.expect(productService.getProducts()).andReturn(Collections.singletonList(product));
         EasyMock.replay(productService);
 
         String response = listener.getProductList("getProductList");
