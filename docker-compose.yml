@@ -6,3 +6,7 @@ rabbitmq:
     ports:
     - "15672:15672"
     - "3131:5672"
+configserver:
+    image: "eso31/springimage"
+    ports:
+    - "8888:8888"
