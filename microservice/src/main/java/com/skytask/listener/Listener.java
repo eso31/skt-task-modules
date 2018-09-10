@@ -8,10 +8,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.messaging.handler.annotation.Payload;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.util.List;
 
+@Component
 public class Listener {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(Listener.class);
