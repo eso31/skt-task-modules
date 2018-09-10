@@ -20,7 +20,7 @@ public class Listener {
 
     private ProductService productService;
 
-    public Listener(ProductService productService){
+    Listener(ProductService productService){
         this.productService = productService;
     }
 
@@ -28,7 +28,12 @@ public class Listener {
     @RabbitListener(queues = "productListQ")
     public String getProductList(@Payload String request) throws IOException {
         LOGGER.info("I received {}", request);
-        List<Product> products = productService.getProducts();
+        List<Product> products = null;
+        try {
+            products = productService.getProducts();
+        } catch(Exception e){
+            LOGGER.error("Error: {}", e.getMessage());
+        }
         return ProductMapper.list2Json(products);
     }
 
@@ -36,7 +41,13 @@ public class Listener {
     @RabbitListener(queues = "createProductQ")
     public Long createProduct(@Payload Product product) {
         LOGGER.info("I received {}", product);
-        return productService.create(product);
+        Long id = null;
+        try {
+            id = productService.create(product);
+        } catch(Exception e){
+            LOGGER.error("Error: {}", e.getMessage());
+        }
+        return id;
     }
 
 }
