@@ -12,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -26,12 +27,19 @@ class ProductController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ModelAndView list() throws IOException {
-        List<Product> productList;
+        List<Product> productList = null;
+        List<String> errors = new ArrayList<>();
         try {
             productList = productServiceManagement.getProductListRabbit();
+            if(productList==null)
+                errors.add("Server failed to retrieve the product list");
         } catch (AmqpException amqpException) {
-            return new ModelAndView("error", "errors", Collections.singletonList("Failed to connect with rabbitmq"));
+            errors.add("Failed to connect with rabbitmq");
         }
+
+        if(errors.size()>0)
+            return new ModelAndView("error", "errors", errors);
+
         return new ModelAndView("index", "products", productList);
     }
 
@@ -47,13 +55,22 @@ class ProductController {
                     bindingResult.getAllErrors().stream().map(DefaultMessageSourceResolvable::getDefaultMessage).toArray());
         }
 
+        List<String> errors = new ArrayList<>();
+
         try {
-            productServiceManagement.createProductRabbit(product);
+            Long id = productServiceManagement.createProductRabbit(product);
+
+            if(id==null)
+                errors.add("Server failed to create a product");
         } catch (IllegalArgumentException e) {
-            return new ModelAndView("error", "errors", Collections.singletonList("Product can not be null"));
+            errors.add("Product can not be null");
         } catch (AmqpException amqpException) {
-            return new ModelAndView("error", "errors", Collections.singletonList("Failed to connect with rabbitmq"));
+            errors.add("Failed to connect with rabbitmq");
         }
+
+        if(errors.size()>0)
+            return new ModelAndView("error", "errors", errors);
+
         return new ModelAndView("redirect:/");
     }
 }
